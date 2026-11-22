@@ -119,7 +119,7 @@ All four rows were reproduced on this source snapshot. `results/cycles.csv` and 
 
 ## Continuous integration
 
-[`regression.yml`](.github/workflows/regression.yml) runs the full regression, the mutation checks, and evidence export on Ubuntu 24.04. It uses the pinned Linux suite, verified by SHA-256. CI for this public snapshot is **pending**: no run of this workflow exists yet for this repository.
+[`regression.yml`](.github/workflows/regression.yml) runs the full regression, the mutation checks, and evidence export on Ubuntu 24.04. It uses the pinned Linux suite, verified by SHA-256. [Run #3](https://github.com/TS-SL/edgemac-rtl/actions/runs/45017194230) passed on commit `f93502e`, the initial snapshot. The check script fails on any skipped or failing cocotb test and on any formal task that does not report PASS. See the [Actions page](https://github.com/TS-SL/edgemac-rtl/actions) for later revisions.
 
 ## Further reading
 
