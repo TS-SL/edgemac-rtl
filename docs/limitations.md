@@ -1,0 +1,9 @@
+# Known limitations
+
+- **Formal scope.** Protocol safety is proven unbounded with `abc pdr` at the 8-element limit and at the production 1,024-element limit. BMC and covers run to 16 steps with an 8-element limit. The protocol checker tracks control flow and result stability, not arithmetic values. Bounded response (a result after exactly ⌈N/LANES⌉ accepted beats) is proven unbounded only at 8 elements. At 1,024, PDR did not converge on it, so simulation checks it at every length instead. No LTL liveness engine was run.
+- **Arithmetic proof scope.** Formal arithmetic covers all INT8 operands and all INT32 biases, but only for fixed two-beat transactions: length 2 with one lane, and length 5 with four. The bound is 10 steps. Longer vectors are scored against the oracle in simulation. Equivalence for arbitrary lengths was not attempted.
+- **Register interface.** The synchronous word interface is EdgeMAC-specific. Connecting it to APB or AXI-Lite needs an adapter.
+- **FPGA timing.** The clock figures come from one device, one placement seed, and automatically assigned I/O, with no pin constraint file. They are internal-clock estimates that exclude external board timing.
+- **Not attempted.** ASIC placement and routing, mapped ASIC area, power, physical-board measurements, and silicon measurements.
+- **Platforms.** The full regression in this snapshot was run on Windows x64. The Linux commands match the CI workflow. Hosted CI passed on Ubuntu 24.04 for the private development revision this snapshot was prepared from, but a CI run of the public snapshot itself is pending. On hosted Linux, cocotb logs a harmless `Unexpected sys.executable value` message, because the suite's bundled Python is also on PATH.
+- **Datapath depth.** The four-lane reduction is not pipelined. The extra adder levels lower its estimated clock compared with one lane.

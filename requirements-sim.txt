@@ -1,0 +1,8 @@
+cocotb==2.1.0
+find-libpython==0.5.0
+pytest==9.2.0
+colorama==0.4.6; platform_system == "Windows"
+iniconfig==2.3.1
+packaging==26.3
+pluggy==1.7.0
+pygments==2.21.0

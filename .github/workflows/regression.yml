@@ -1,0 +1,74 @@
+name: regression
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  OSS_CAD_SUITE_TAG: "2026-11-14"
+  OSS_CAD_SUITE_ASSET: oss-cad-suite-linux-x64-20261114.tgz
+  # Upstream release asset digest, recorded from the GitHub release API.
+  OSS_CAD_SUITE_SHA256: 25d1960bc0f002c43b3579423c4e622bcffed49b7bb8b1f02df6426b1bdd2f26
+
+jobs:
+  full:
+    # Every check is mandatory; check.py exits nonzero on a missing tool,
+    # a failing or skipped cocotb test, or a non-PASS formal task.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v7
+
+      - id: python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      - name: Restore pinned OSS CAD Suite
+        id: suite-cache
+        uses: actions/cache@v6
+        with:
+          path: oss-cad-suite
+          key: oss-cad-suite-${{ env.OSS_CAD_SUITE_ASSET }}-${{ env.OSS_CAD_SUITE_SHA256 }}
+
+      - name: Download and verify pinned OSS CAD Suite
+        if: steps.suite-cache.outputs.cache-hit != 'true'
+        run: |
+          curl --fail --location --retry 3 --output suite.tgz \
+            "https://github.com/YosysHQ/oss-cad-suite-build/releases/download/${OSS_CAD_SUITE_TAG}/${OSS_CAD_SUITE_ASSET}"
+          echo "${OSS_CAD_SUITE_SHA256}  suite.tgz" | sha256sum --check --strict
+          tar -xzf suite.tgz
+          rm suite.tgz
+
+      - name: Put suite tools on PATH
+        # Appended after setup-python so the pinned CPython 3.12 stays first.
+        run: echo "PATH=$PATH:$GITHUB_WORKSPACE/oss-cad-suite/bin" >> "$GITHUB_ENV"
+
+      - name: Install pinned Python packages
+        run: '"${{ steps.python.outputs.python-path }}" -m pip install -r requirements-sim.txt'
+
+      - name: Full regression
+        run: '"${{ steps.python.outputs.python-path }}" scripts/check.py all'
+
+      - name: Mutation checks
+        run: '"${{ steps.python.outputs.python-path }}" scripts/check_mutations.py'
+
+      - name: Export evidence
+        run: '"${{ steps.python.outputs.python-path }}" scripts/export_evidence.py'
+
+      - name: Upload evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: edgemac-evidence
+          path: |
+            results/
+            build/**/results.xml
+            build/formal/*/status
+            build/synthesis/*.json
+            build/timing/*.json
+          if-no-files-found: warn

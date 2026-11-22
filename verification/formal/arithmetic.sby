@@ -1,0 +1,31 @@
+[tasks]
+one_bmc one bmc
+one_cover one cover
+four_bmc four bmc
+four_cover four cover
+one_bmc_int8 one bmc int8
+one_cover_int8 one cover int8
+four_bmc_int8 four bmc int8
+four_cover_int8 four cover int8
+
+[options]
+bmc: mode bmc
+cover: mode cover
+depth 10
+~int8: timeout 60
+int8: timeout 300
+
+[engines]
+~int8: smtbmc z3
+int8: smtbmc bitwuzla
+
+[script]
+read -formal -sv edgemac_top.sv edgemac_arithmetic.sv
+one: chparam -set LANES 1 edgemac_arithmetic
+four: chparam -set LANES 4 edgemac_arithmetic
+int8: chparam -set OPERAND_BITS 8 edgemac_arithmetic
+prep -top edgemac_arithmetic
+
+[files]
+rtl/edgemac_top.sv
+verification/formal/edgemac_arithmetic.sv

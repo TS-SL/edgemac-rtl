@@ -1,0 +1,32 @@
+[tasks]
+one_bmc one bmc
+one_cover one cover
+four_bmc four bmc
+four_cover four cover
+one_prove one prove
+four_prove four prove
+one_prove_full one prove full
+four_prove_full four prove full
+
+[options]
+bmc: mode bmc
+cover: mode cover
+prove: mode prove
+depth 16
+timeout 90
+
+[engines]
+bmc: smtbmc z3
+cover: smtbmc z3
+prove: abc pdr
+
+[script]
+read -formal -sv edgemac_top.sv edgemac_formal.sv
+one: chparam -set LANES 1 edgemac_formal
+four: chparam -set LANES 4 edgemac_formal
+full: chparam -set MAX_LENGTH 1024 -set CHECK_RESPONSE 0 edgemac_formal
+prep -top edgemac_formal
+
+[files]
+rtl/edgemac_top.sv
+verification/formal/edgemac_formal.sv

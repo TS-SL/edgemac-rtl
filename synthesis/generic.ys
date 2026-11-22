@@ -1,0 +1,7 @@
+read_verilog -sv rtl/edgemac_top.sv
+chparam -set LANES @LANES@ edgemac_top
+hierarchy -check -top edgemac_top
+synth -top edgemac_top
+check -assert
+tee -o @STATS@ stat -json
+ltp -noff

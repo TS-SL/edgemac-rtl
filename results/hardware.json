@@ -1,0 +1,134 @@
+{
+  "1": {
+    "yosys": "Yosys 0.71+34 (git sha1 e419c4eef, Release, GNU /usr/bin/x86_64-w64-mingw32-g++ 15.2.1)",
+    "generic_cells": 1466,
+    "generic_ff_cells": 145,
+    "generic_cells_by_type": {
+      "$_ANDNOT_": 152,
+      "$_AND_": 397,
+      "$_MUX_": 37,
+      "$_NAND_": 276,
+      "$_NOR_": 45,
+      "$_NOT_": 41,
+      "$_ORNOT_": 22,
+      "$_OR_": 160,
+      "$_SDFFE_PN0P_": 143,
+      "$_SDFF_PN0_": 2,
+      "$_XNOR_": 45,
+      "$_XOR_": 146
+    },
+    "generic_logic_depth": 69,
+    "fpga_clocks": {
+      "clk$SB_IO_IN_$glb_clk": {
+        "achieved": 88.96797180175781,
+        "constraint": 50
+      }
+    },
+    "fpga_utilization": {
+      "ICESTORM_LC": {
+        "available": 7680,
+        "used": 590
+      },
+      "ICESTORM_PLL": {
+        "available": 2,
+        "used": 0
+      },
+      "ICESTORM_RAM": {
+        "available": 32,
+        "used": 0
+      },
+      "SB_GB": {
+        "available": 8,
+        "used": 2
+      },
+      "SB_IO": {
+        "available": 206,
+        "used": 131
+      },
+      "SB_WARMBOOT": {
+        "available": 1,
+        "used": 0
+      }
+    },
+    "formal": {
+      "protocol": {
+        "bmc": "PASS",
+        "cover": "PASS",
+        "prove": "PASS",
+        "prove_full": "PASS"
+      },
+      "arithmetic": {
+        "bmc": "PASS",
+        "cover": "PASS",
+        "bmc_int8": "PASS",
+        "cover_int8": "PASS"
+      }
+    }
+  },
+  "4": {
+    "yosys": "Yosys 0.71+34 (git sha1 e419c4eef, Release, GNU /usr/bin/x86_64-w64-mingw32-g++ 15.2.1)",
+    "generic_cells": 3256,
+    "generic_ff_cells": 145,
+    "generic_cells_by_type": {
+      "$_ANDNOT_": 211,
+      "$_AND_": 683,
+      "$_MUX_": 55,
+      "$_NAND_": 1034,
+      "$_NOR_": 73,
+      "$_NOT_": 52,
+      "$_ORNOT_": 46,
+      "$_OR_": 235,
+      "$_SDFFE_PN0P_": 143,
+      "$_SDFF_PN0_": 2,
+      "$_XNOR_": 150,
+      "$_XOR_": 572
+    },
+    "generic_logic_depth": 76,
+    "fpga_clocks": {
+      "clk$SB_IO_IN_$glb_clk": {
+        "achieved": 71.75144958496094,
+        "constraint": 50
+      }
+    },
+    "fpga_utilization": {
+      "ICESTORM_LC": {
+        "available": 7680,
+        "used": 1307
+      },
+      "ICESTORM_PLL": {
+        "available": 2,
+        "used": 0
+      },
+      "ICESTORM_RAM": {
+        "available": 32,
+        "used": 0
+      },
+      "SB_GB": {
+        "available": 8,
+        "used": 2
+      },
+      "SB_IO": {
+        "available": 206,
+        "used": 182
+      },
+      "SB_WARMBOOT": {
+        "available": 1,
+        "used": 0
+      }
+    },
+    "formal": {
+      "protocol": {
+        "bmc": "PASS",
+        "cover": "PASS",
+        "prove": "PASS",
+        "prove_full": "PASS"
+      },
+      "arithmetic": {
+        "bmc": "PASS",
+        "cover": "PASS",
+        "bmc_int8": "PASS",
+        "cover_int8": "PASS"
+      }
+    }
+  }
+}
